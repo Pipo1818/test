@@ -1,0 +1,43 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+import '../styles/styles.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  contact?: boolean;
+}
+
+const {
+  title,
+  description = 'Kostenlose Pflegehilfsmittel mit der Pflegebox von Pflegeplanet – im Wert von bis zu 42 € pro Monat.',
+  noindex = false,
+  contact = true,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <Header />
+  <main>
+    <slot />
+  </main>
+  {contact && <Contact />}
+  <Footer />
+  <script src="/assets/js/main.js" is:inline></script>
+</body>
+</html>

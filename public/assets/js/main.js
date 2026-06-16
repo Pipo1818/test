@@ -46,8 +46,26 @@
     }
   });
 
-  // Current year in footer
+  // Current year in footer (falls noch als Platzhalter vorhanden)
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
+  });
+
+  // Kontaktformular: bis ein Backend angebunden ist, Submit clientseitig abfangen
+  document.querySelectorAll("[data-contact-form]").forEach(function (form) {
+    var status = form.querySelector("[data-form-status]");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      if (status) {
+        status.textContent =
+          "Vielen Dank! Ihre Nachricht wurde erfasst. Wir melden uns in Kürze bei Ihnen.";
+        status.classList.add("ok");
+      }
+      form.reset();
+    });
   });
 })();

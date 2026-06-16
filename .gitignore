@@ -1,2 +1,13 @@
+# Dependencies
+node_modules/
+
+# Astro build output
+dist/
+.astro/
+
+# Python (Legacy-Build-Tooling)
 __pycache__/
 *.pyc
+
+# OS / Editor
+.DS_Store

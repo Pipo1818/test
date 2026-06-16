@@ -1,60 +1,68 @@
-# Pflegeplanet – Website-Nachbau
+# Pflegeplanet – Website (Astro)
 
-Statischer Nachbau von **pflege-planet.de** inkl. aller Landingpages, erstellt als
-reines HTML/CSS/JS (ohne Build-Abhängigkeiten, ohne Framework).
+Nachbau von **pflege-planet.de** inkl. aller Landingpages – umgesetzt mit
+[**Astro**](https://astro.build). Statisch-schnell, komponentenbasiert und
+vorbereitet für schrittweise neue Funktionen.
 
-## Seiten
-
-| Seite | Pfad |
-|-------|------|
-| Startseite | `/index.html` |
-| Pflegebox | `/pflegebox/` |
-| Pflegebox anpassen | `/pflegebox/pflegebox-anpassen/` |
-| Pflegehilfsmittel-Katalog | `/pflegehilfsmittel-katalog/` |
-| Fragen & Antworten | `/fragen/` |
-| Über uns | `/ueber-uns/` |
-| Impressum | `/impressum/` |
-| Datenschutz | `/datenschutz/` |
-
-## Lokal ansehen
-
-Da die Seiten root-relative Links (`/pflegebox/` …) verwenden – wie die Originalseite –
-am besten über einen lokalen Server öffnen:
+## Schnellstart
 
 ```bash
-python3 -m http.server 8000
-# danach http://localhost:8000 im Browser öffnen
+npm install
+npm run dev      # Entwicklungsserver: http://localhost:4321
+npm run build    # Produktions-Build nach dist/
+npm run preview  # Build lokal ansehen
 ```
+
+## Projektstruktur
+
+```
+src/
+  layouts/
+    Base.astro          # HTML-Grundgerüst (Head, Header, Footer, Kontakt, Skripte)
+  components/
+    Header.astro        # Topbar + Navigation
+    Footer.astro        # Footer + WhatsApp-Button
+    Contact.astro       # Kontaktsektion mit Formular + Ansprechpartner
+  pages/                # je Datei = eine Route
+    index.astro                         # /
+    pflegebox/index.astro               # /pflegebox/
+    pflegebox/pflegebox-anpassen.astro  # /pflegebox/pflegebox-anpassen/
+    pflegehilfsmittel-katalog.astro     # /pflegehilfsmittel-katalog/
+    fragen.astro                        # /fragen/
+    ueber-uns.astro                     # /ueber-uns/
+    impressum.astro                     # /impressum/
+    datenschutz.astro                   # /datenschutz/
+  styles/
+    styles.css          # komplettes Design-System
+public/
+  assets/img/logo.svg
+  assets/js/main.js     # Mobile-Nav, FAQ-Accordion, Formular-Handling
+```
+
+## Neue Funktionen ergänzen
+
+- **Statische Komponente/Seite:** neue `.astro`-Datei in `src/pages/` oder
+  `src/components/` anlegen.
+- **Interaktivität (Islands):** UI-Framework-Komponente (z. B. React/Svelte/Vue)
+  via `npx astro add react` einbinden und mit `client:load` aktivieren.
+- **Formular-Backend / API:** Server-Endpunkte unter `src/pages/api/*.ts` –
+  dafür einen Adapter aktivieren (`npx astro add node` o. Ä.) und in
+  `astro.config.mjs` `output: 'server'` setzen. Das Kontaktformular postet
+  bereits auf `/api/kontakt`; aktuell wird der Submit clientseitig abgefangen.
 
 ## Design
 
-Farben und Typografie wurden aus den Original-Screenshots übernommen:
+Farben aus den Original-Screenshots gesampelt:
 
 - **Dunkles Teal-Grün** `#305850` – Sektionen, Footer, Headlines, Kontaktbereich
 - **Lime-Akzent** `#aac63e` – Buttons, Links, Highlights, Icons
 - **Sekundär-Grün** `#7baea7` – gedämpfte Sub-Headlines
 - Schriften: **Quicksand** (Headlines/Navigation/Buttons) + **Mukta** (Fließtext)
 
-Alle Texte (Hero, Voraussetzungen, Produkte, 3-Schritte-Ablauf, Testimonial,
-FAQ, Impressum mit echten Firmendaten) entsprechen den Original-Inhalten.
-
-## Aufbau / Wartung
-
-- `assets/css/styles.css` – komplettes Design-System
-- `assets/js/main.js` – Mobile-Navigation, FAQ-Accordion, aktive Nav-Markierung
-- `assets/img/logo.svg` – Logo
-- `index.html` – handgepflegte Startseite
-- `build.py` + `pages_content.py` – erzeugen die Unterseiten aus gemeinsamen
-  Bausteinen (Header, Kontaktsektion, Footer), damit Navigation/Layout überall
-  identisch sind. Neu erzeugen mit: `python3 build.py`
-
 ## Hinweise
 
-- **Bilder:** Die Originalfotos (Hero, Team, Tim Bodung, Produktbilder) konnten
-  nicht aus der Live-Seite gezogen werden (Bot-Schutz + Netzwerk-Allowlist der
-  Build-Umgebung). Als Platzhalter dienen passende Inline-SVG-Illustrationen.
-  Echte Fotos einfach in `assets/img/` ablegen und die entsprechenden
-  `<svg>`-Platzhalter durch `<img>` ersetzen.
-- Das Kontaktformular ist Frontend-only (kein Versand-Backend hinterlegt).
-- Die Datenschutzerklärung ist inhaltlich an Standard-DSGVO-Texte angelehnt und
-  sollte vor Live-Betrieb rechtlich geprüft werden.
+- **Bilder:** Originalfotos (Hero, Team, Tim Bodung, Produkte) konnten nicht aus
+  der Live-Seite gezogen werden (Bot-Schutz + Netzwerk-Allowlist). Als Platzhalter
+  dienen Inline-SVGs – echte Bilder in `public/assets/img/` ablegen und einsetzen.
+- Die Datenschutzerklärung ist an Standard-DSGVO-Texte angelehnt und sollte vor
+  Live-Betrieb rechtlich geprüft werden.
