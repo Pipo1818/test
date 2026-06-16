@@ -1,13 +1,14 @@
 # Dependencies
 node_modules/
 
-# Astro build output
-dist/
-.astro/
+# Next.js
+.next/
+out/
+next-env.d.ts
 
-# Python (Legacy-Build-Tooling)
+# Python (Legacy)
 __pycache__/
 *.pyc
 
-# OS / Editor
+# OS
 .DS_Store

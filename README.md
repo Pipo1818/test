@@ -1,54 +1,55 @@
-# Pflegeplanet – Website (Astro)
+# Pflegeplanet – Website (Next.js)
 
 Nachbau von **pflege-planet.de** inkl. aller Landingpages – umgesetzt mit
-[**Astro**](https://astro.build). Statisch-schnell, komponentenbasiert und
-vorbereitet für schrittweise neue Funktionen.
+[**Next.js**](https://nextjs.org) (App Router, React 19). Gleiches Design/HTML,
+vorbereitet für schrittweise neue Funktionen (React-Komponenten & API-Routen).
 
 ## Schnellstart
 
 ```bash
 npm install
-npm run dev      # Entwicklungsserver: http://localhost:4321
-npm run build    # Produktions-Build nach dist/
-npm run preview  # Build lokal ansehen
+npm run dev      # Entwicklungsserver: http://localhost:3000
+npm run build    # Produktions-Build
+npm run start    # Build lokal starten
 ```
 
 ## Projektstruktur
 
 ```
-src/
-  layouts/
-    Base.astro          # HTML-Grundgerüst (Head, Header, Footer, Kontakt, Skripte)
-  components/
-    Header.astro        # Topbar + Navigation
-    Footer.astro        # Footer + WhatsApp-Button
-    Contact.astro       # Kontaktsektion mit Formular + Ansprechpartner
-  pages/                # je Datei = eine Route
-    index.astro                         # /
-    pflegebox/index.astro               # /pflegebox/
-    pflegebox/pflegebox-anpassen.astro  # /pflegebox/pflegebox-anpassen/
-    pflegehilfsmittel-katalog.astro     # /pflegehilfsmittel-katalog/
-    fragen.astro                        # /fragen/
-    ueber-uns.astro                     # /ueber-uns/
-    impressum.astro                     # /impressum/
-    datenschutz.astro                   # /datenschutz/
-  styles/
-    styles.css          # komplettes Design-System
+app/
+  layout.jsx          # Root-Layout (Header, Footer, Interactions, globales CSS)
+  globals.css         # komplettes Design-System
+  content.js          # gemeinsame Bausteine (Header/Footer/Kontakt) + Seiteninhalte
+  page.jsx                                  # /
+  pflegebox/page.jsx                        # /pflegebox/
+  pflegebox/pflegebox-anpassen/page.jsx     # /pflegebox/pflegebox-anpassen/
+  pflegehilfsmittel-katalog/page.jsx        # /pflegehilfsmittel-katalog/
+  fragen/page.jsx                           # /fragen/
+  ueber-uns/page.jsx                        # /ueber-uns/
+  impressum/page.jsx                        # /impressum/
+  datenschutz/page.jsx                      # /datenschutz/
+components/
+  Contact.jsx         # Kontaktsektion (Formular + Ansprechpartner)
+  Interactions.jsx    # 'use client' – Mobile-Nav, FAQ-Accordion, Formular, aktive Nav
 public/
   assets/img/logo.svg
-  assets/js/main.js     # Mobile-Nav, FAQ-Accordion, Formular-Handling
 ```
+
+Die Seiteninhalte und die wiederkehrenden Bausteine (Header/Footer/Kontakt)
+liegen als HTML-Partials in `app/content.js` und werden gerendert, damit der
+Aufbau pixelgenau zum Original passt. Die Interaktivität läuft über die
+React-Client-Komponente `Interactions.jsx`.
 
 ## Neue Funktionen ergänzen
 
-- **Statische Komponente/Seite:** neue `.astro`-Datei in `src/pages/` oder
-  `src/components/` anlegen.
-- **Interaktivität (Islands):** UI-Framework-Komponente (z. B. React/Svelte/Vue)
-  via `npx astro add react` einbinden und mit `client:load` aktivieren.
-- **Formular-Backend / API:** Server-Endpunkte unter `src/pages/api/*.ts` –
-  dafür einen Adapter aktivieren (`npx astro add node` o. Ä.) und in
-  `astro.config.mjs` `output: 'server'` setzen. Das Kontaktformular postet
-  bereits auf `/api/kontakt`; aktuell wird der Submit clientseitig abgefangen.
+- **React-Komponente / Seite:** neue Datei unter `app/.../page.jsx` (Route) oder
+  `components/`. Neue interaktive Bausteine am besten direkt als React-Komponente
+  (statt HTML-Partial) bauen.
+- **Formular-Backend / API:** Route Handler unter `app/api/<name>/route.js`
+  anlegen. Das Kontaktformular postet bereits auf `/api/kontakt`; aktuell wird
+  der Submit clientseitig abgefangen (`Interactions.jsx`). Sobald
+  `app/api/kontakt/route.js` existiert, kann dort echt verarbeitet/versendet
+  werden.
 
 ## Design
 
