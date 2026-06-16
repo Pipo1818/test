@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Pflegeplanet">
+  <defs>
+    <linearGradient id="pp" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3f7064"/>
+      <stop offset="1" stop-color="#244a42"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="24" cy="25" rx="22" ry="7" fill="none" stroke="#7baea7" stroke-width="2.4" transform="rotate(-24 24 25)"/>
+  <circle cx="24" cy="22" r="13" fill="url(#pp)"/>
+  <circle cx="19" cy="18" r="2.4" fill="#7baea7" opacity=".55"/>
+  <circle cx="28" cy="25" r="3.4" fill="#1f4138" opacity=".5"/>
+  <ellipse cx="24" cy="25" rx="22" ry="7" fill="none" stroke="#aac63e" stroke-width="2.4" stroke-dasharray="0 26 18 60" transform="rotate(-24 24 25)"/>
+</svg>
